@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,120 +8,120 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter MeetUp',
-      home: MyHomePage(title: 'Eliaquim e top'),
+      theme: ThemeData(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Image.network(
+            'https://go.hurb.com/wp-content/uploads/2017/02/Koh-Tao-Tail%C3%A2ndia.jpg',
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(
+                'Paisagem Bonita',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text('Realmentne e bonita'),
+              trailing: Container(
+                constraints: BoxConstraints(maxHeight: 200),
+                child: StarWithNumber(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Icon(Icons.call, color: Colors.blue),
+                    Text(
+                      'Call',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Icon(Icons.star, color: Colors.blue),
+                    Text(
+                      'Star',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Icon(Icons.share, color: Colors.blue),
+                    Text(
+                      'Share',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text(
+              'Mussum Ipsum, cacilds vidis litro abertis. A ordem dos tratores não altera o pão duris. In elementis mé pra quem é amistosis quis leo. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. Cevadis im ampola pa arma uma pindureta.',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StarWithNumber extends StatefulWidget {
+  @override
+  _StarWithNumberState createState() => _StarWithNumberState();
+}
+
+class _StarWithNumberState extends State<StarWithNumber> {
+  int likeNumber = 42;
   bool isLiked = false;
 
-  void _darLike() {
+  void givenLike() {
     setState(() {
+      if (isLiked) {
+        likeNumber--;
+      } else {
+        likeNumber++;
+      }
       isLiked = !isLiked;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.network(
-              'https://go.hurb.com/wp-content/uploads/2017/02/Koh-Tao-Tail%C3%A2ndia.jpg',
-              fit: BoxFit.fitWidth,
-              width: double.infinity,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: ListTile(
-                title: Text('Qualquer Titulo'),
-                subtitle: Text('Qualquer subtitulo'),
-                trailing: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: _darLike,
-                      child: IconBonito(
-                        icone: Icons.star,
-                        texto: '4',
-                        isSelect: isLiked,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            LinhaBotoes(),
-            Padding(
-              padding: const EdgeInsets.only(left: 28, right: 28, top: 24),
-              child: Text(
-                "Vestibulum euismod imperdiet lacus vel lobortis. Ut feugiat est quis condimentum rutrum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin sem nunc, rutrum vel mattis vitae, luctus at est. Suspendisse cursus aliquet convallis. Integer quis hendrerit odio, nec aliquam mi. Morbi porta nisi quis justo laoreet, ut iaculis leo consectetur. Duis a mi consectetur, ornare nibh at, euismod sem. Integer iaculis mattis purus sit amet egestas. In vehicula, purus ut sagittis condimentum, diam dui ",
-                textAlign: TextAlign.justify,
-                style: GoogleFonts.baloo(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LinhaBotoes extends StatelessWidget {
-  const LinhaBotoes({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
       children: [
-        IconBonito(
-          icone: Icons.phone,
-          texto: 'ligar',
-        ),
-        IconBonito(
-          icone: Icons.near_me,
-          texto: 'Rota',
-        ),
-        IconBonito(
-          icone: Icons.share,
-          texto: 'Compartilhar',
+        Text('$likeNumber'),
+        GestureDetector(
+          child: Icon(
+            Icons.star,
+            color: isLiked ? Colors.red : Colors.grey,
+          ),
+          onTap: givenLike,
         ),
       ],
-    );
-  }
-}
-
-class IconBonito extends StatelessWidget {
-  final IconData icone;
-  final String texto;
-  final bool isSelect;
-
-  IconBonito({this.icone, this.texto, this.isSelect = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.3,
-      child: Column(
-        children: [
-          Icon(icone, color: isSelect ? Colors.red : Colors.grey),
-          Text(texto),
-        ],
-      ),
     );
   }
 }
