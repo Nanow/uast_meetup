@@ -1,6 +1,6 @@
 # meet_up
 
-A new Flutter project.
+Projeto flutter inicial para dos MeetUps uastianos
 
 ## Getting Started
 
